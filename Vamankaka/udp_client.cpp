@@ -52,3 +52,48 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+
+
+
+
+/*
+🔹 UDP Client Program – Explanation 🔹
+
+1️⃣ Command-line arguments usage:
+   ./client <server_ip> <word_to_send> <port_number>
+
+2️⃣ socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)
+   - Creates a UDP socket
+   - PF_INET → IPv4 networking
+   - SOCK_DGRAM → UDP communication
+
+3️⃣ Server Address Setup
+   server.sin_family = AF_INET;        → IPv4
+   server.sin_addr.s_addr = inet_addr(argv[1]);  → Server IP
+   server.sin_port = htons(atoi(argv[3]));       → Server port
+
+4️⃣ echolen = strlen(argv[2]);
+   Stores length of the word to be sent
+
+5️⃣ sendto()
+   Sends message (word) to specified server
+   No connection required in UDP
+
+6️⃣ recvfrom()
+   - Receives echoed message back from server
+   - Blocks execution until server responds
+   - Stores received data in buffer
+
+7️⃣ buffer[received] = '\0';
+   Null-terminates received string
+
+8️⃣ close(sock);
+   Closes UDP socket and ends the program
+
+✔ Purpose:
+   To send a word to UDP server and print back the reply received
+
+📌 Note:
+   UDP is connectionless:
+   No handshake → packets may be lost / duplicated
+*/
