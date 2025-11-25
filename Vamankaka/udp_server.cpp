@@ -50,3 +50,43 @@ int main(int argc, char* argv[]) {
     }
 }
 
+
+
+
+
+/*
+🔹 UDP SERVER PROGRAM — Explanation 🔹
+
+1️⃣ Command-line:
+   ./server <portnumber>
+   Example: ./server 5000
+
+2️⃣ socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)
+   - Creates a UDP socket
+   - SOCK_DGRAM → UDP protocol
+   - PF_INET → IPv4
+
+3️⃣ Server Address Configuration:
+   server.sin_family = AF_INET;        → IPv4
+   server.sin_addr.s_addr = INADDR_ANY → Accept requests from any network interface
+   server.sin_port = htons(port);      → Given port number (network byte order)
+
+4️⃣ bind()
+   Assigns server IP + port to the created socket
+   Makes the server ready to receive messages
+
+5️⃣ Infinite loop to serve clients:
+   recvfrom()
+     - Waits for a message from client
+     - Also collects client address for reply
+     - Message stored in 'buffer'
+
+   inet_ntoa()
+     - Displays connected client’s IP
+
+   sendto()
+     - Sends back the same message received (echo)
+     - No connection required → UDP is connectionless
+
+6️⃣ Server runs forever until manually terminated
+*/
