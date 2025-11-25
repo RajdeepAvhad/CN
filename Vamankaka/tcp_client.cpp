@@ -38,3 +38,49 @@ int main() {
     return 0;
 }
 
+
+
+
+
+
+
+
+/*
+🔹 Code Explanation — TCP Client Program 🔹
+
+1️⃣ Header files:
+   - socket, types, netinet, arpa, unistd → Used for socket & network functions
+   - bits/stdc++.h → All common standard C++ libraries
+
+2️⃣ Variables:
+   - sockfd → Socket file descriptor
+   - recvBuff → Buffer to store received data
+   - serv_addr → Server socket address structure
+   - n → Number of bytes read
+
+3️⃣ memset(recvBuff, 0, sizeof(recvBuff));
+   Initializes buffer memory with 0
+
+4️⃣ socket(AF_INET, SOCK_STREAM, 0);
+   Creates a TCP socket (SOCK_STREAM)
+   AF_INET → IPv4 communication
+
+5️⃣ Setup server details:
+   serv_addr.sin_family = AF_INET;       → IPv4
+   serv_addr.sin_port = htons(5000);     → Server port (host-to-network byte order)
+   serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1"); → Localhost IP
+
+6️⃣ connect()
+   Establishes a connection with the server
+   If connect fails → server not running or wrong IP/port
+
+7️⃣ while(read(...))
+   Continuously reads data coming from server
+   - read() returns number of bytes received
+   - recvBuff[n] = 0 ensures proper string termination
+   - prints the received message
+
+8️⃣ If read() returns negative → print error
+
+🔚 Program ends after server closes connection
+*/
