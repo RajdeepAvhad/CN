@@ -40,3 +40,55 @@ int main() {
     return 0;
 }
 
+
+
+
+
+/*
+🔹 Code Explanation — TCP SERVER PROGRAM 🔹
+
+1️⃣ Required header files:
+   - sys/socket.h, netinet/in.h, arpa/inet.h → socket & network structures
+   - unistd.h → for read/write/close functions
+
+2️⃣ listenfd → Server socket descriptor (for listening)
+   connfd → Client connection socket descriptor (after accept)
+
+3️⃣ socket(AF_INET, SOCK_STREAM, 0)
+   - Creates a TCP socket
+   - AF_INET = IPv4
+   - SOCK_STREAM = TCP protocol
+
+4️⃣ memset() → Initialize structures & buffer with 0
+
+5️⃣ Setup server address:
+   serv_addr.sin_family = AF_INET;  → IPv4
+   serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+     → Accept connections on any local interface
+   serv_addr.sin_port = htons(5000);
+     → Port number 5000
+
+6️⃣ bind()
+   Attaches socket to specified IP & port
+
+7️⃣ listen()
+   - Enables server to accept incoming connections
+   - 10 → max queue length for pending connections
+
+8️⃣ Infinite loop:
+   accept()
+     → Waits for client connection
+     → Returns new socket connfd for communication
+
+   strcpy(sendBuff, "Message from server");
+   write(connfd, sendBuff, strlen(sendBuff));
+     → Sends message to connected client
+
+   close(connfd);
+     → Closes that client connection
+
+   sleep(1);
+     → Delay before accepting next connection
+
+9️⃣ Server continues running forever until manually stopped
+*/
