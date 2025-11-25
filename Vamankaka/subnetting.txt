@@ -1,0 +1,102 @@
+1️⃣ Subnetting Recap
+
+Network: 192.168.10.0/25
+
+Subnet 1: 192.168.10.0 – 192.168.10.127
+
+Subnet 2: 192.168.10.128 – 192.168.10.255
+
+Mask: 255.255.255.128
+
+2️⃣ IP Address Plan (Sequential – as you chose)
+🔹 Subnet #1 (Blue side)
+Device / Interface	IP Address	Subnet Mask	Default Gateway
+Router0 G0/0	192.168.10.1	255.255.255.128	—
+Switch0 (optional SVI)	192.168.10.2	255.255.255.128	192.168.10.1
+PC0 Fa0	192.168.10.3	255.255.255.128	192.168.10.1
+PC1 Fa0	192.168.10.4	255.255.255.128	192.168.10.1
+PC2 Fa0	192.168.10.5	255.255.255.128	192.168.10.1
+🔹 Subnet #2 (Yellow side)
+Device / Interface	IP Address	Subnet Mask	Default Gateway
+Router0 G0/1	192.168.10.129	255.255.255.128	—
+Switch1 (optional SVI)	192.168.10.130	255.255.255.128	192.168.10.129
+PC3 Fa0	192.168.10.131	255.255.255.128	192.168.10.129
+PC4 Fa0	192.168.10.132	255.255.255.128	192.168.10.129
+PC5 Fa0	192.168.10.133	255.255.255.128	192.168.10.129
+3️⃣ How to Build This Topology in Packet Tracer
+Step 1: Place Devices
+
+1× Router → 2911 (same as your diagram).
+
+2× Switches → any 2960 switch.
+
+6× PCs → PC-PT.
+
+Arrange like in your image:
+
+Left switch + 3 PCs = Subnet 1
+
+Right switch + 3 PCs = Subnet 2
+
+Router on top.
+
+Step 2: Cabling
+
+Router G0/0 → Switch0 (Fa0/1 or any port) using copper straight-through.
+
+Router G0/1 → Switch1.
+
+Each PC’s Fa0 → nearest switch port.
+
+Wait till all link lights go green.
+
+4️⃣ Router Configuration (Very Important)
+
+Click Router0 → CLI and enter:
+
+enable
+conf t
+
+interface g0/0
+ ip address 192.168.10.1 255.255.255.128
+ no shutdown
+exit
+
+interface g0/1
+ ip address 192.168.10.129 255.255.255.128
+ no shutdown
+exit
+
+end
+wr
+
+
+That’s enough for routing because both networks are directly connected on this router.
+
+5️⃣ PC Configuration
+
+For each PC:
+
+Example – PC0
+
+Desktop → IP Configuration
+
+IP Address: 192.168.10.3
+
+Subnet Mask: 255.255.255.128
+
+Default Gateway: 192.168.10.1
+
+Similarly set:
+
+PC1 → 192.168.10.4 /25, GW 192.168.10.1
+
+PC2 → 192.168.10.5 /25, GW 192.168.10.1
+
+PC3 → 192.168.10.131 /25, GW 192.168.10.129
+
+PC4 → 192.168.10.132 /25, GW 192.168.10.129
+
+PC5 → 192.168.10.133 /25, GW 192.168.10.129
+
+(You don’t need switch IPs unless you want to manage them via telnet/SSH.)
